@@ -1,0 +1,183 @@
+Array
+(
+    [maKH] => A002
+)
+Array
+(
+    [room] => R001
+    [fullname] => đạt
+    [phone] => 0147852963
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => thành đạt
+    [phone] => 0123456798
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-28
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => trung hiếu
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R004
+    [fullname] => ddd
+    [phone] => 0124578963
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R004
+    [fullname] => fdfd
+    [phone] => 0147852852
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-31
+    [time] => 2025-06-01
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => ádfghj
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-29
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => thành đạt
+    [phone] => 0741852096
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-29
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => trung hiếu
+    [phone] => 0147852963
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R004
+    [fullname] => dfgh
+    [phone] => 0258741963
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-06-04
+    [note] => 
+)
+Array
+(
+    [room] => R005
+    [fullname] => xfghjk
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => thành đạt
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => trung hiếu
+    [phone] => 0123456789
+    [email] => sdasasd@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => thành đạt
+    [phone] => 0147825396
+    [email] => TCH20250530146@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => trung hiếu
+    [phone] => 0741852963
+    [email] => TCH20250530146@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => thành đạt
+    [gioiTinh] => Nam
+    [ngaySinh] => 2004-02-07
+    [diaChi] => 180 cao lỗ
+    [phone] => 0147852963
+    [email] => TCH2025053014@gmail.com
+    [date] => 2025-05-31
+    [time] => 2025-06-07
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => trung hiếu
+    [gioiTinh] => Nữ
+    [ngaySinh] => 2004-04-08
+    [diaChi] => 180
+    [phone] => 0147852963
+    [email] => TCH2025053014@gmail.com
+    [date] => 2025-05-30
+    [time] => 2025-05-31
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => thành đạt
+    [gioiTinh] => Nam
+    [ngaySinh] => 2004-07-02
+    [diaChi] => 189
+    [phone] => 0258741963
+    [email] => lt@gmail.com
+    [date] => 2025-05-31
+    [time] => 2025-06-02
+    [note] => 
+)

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Check-Out - THE COW HOTEL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --main-bg: #f5f5f5;
+      --main-blue: #183153;
+      --main-blue2: #2d4379;
+      --main-yellow: #e4a11b;
+      --main-green: #2e7d32;
+      --main-green2: #43a047;
+      --main-border: #b2dfdb;
+      --main-white: #fff;
+      --main-shadow: 0 6px 32px #18315318;
+      --main-radius: 18px;
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--main-bg);
+      margin: 0;
+      color: var(--main-blue);
+      min-height: 100vh;
+    }
+    .topbar {
+      background: var(--main-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 40px;
+      border-bottom: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px #1831530a;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--main-blue);
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #1831530a;
+    }
+    .topbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+      margin: 0;
+      padding: 0;
+    }
+    .topbar nav ul li a {
+      text-decoration: none;
+      color: var(--main-blue2);
+      font-weight: 600;
+      font-size: 1.08em;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .topbar nav ul li a:hover,
+    .topbar nav ul li a.active {
+      color: var(--main-yellow);
+      border-bottom: 2.5px solid var(--main-yellow);
+    }
+    .book-btn {
+      background: var(--main-yellow);
+      color: var(--main-white);
+      border: none;
+      padding: 10px 26px;
+      font-weight: bold;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 1.08em;
+      box-shadow: 0 2px 8px #e4a11b22;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 1px;
+    }
+    .book-btn:hover {
+      background: #c98f0b;
+      transform: translateY(-2px) scale(1.03);
+    }
+    .container {
+      max-width: 430px;
+      margin: 56px auto 0 auto;
+      background: var(--main-white);
+      border-radius: var(--main-radius);
+      box-shadow: var(--main-shadow);
+      padding: 38px 32px 28px 32px;
+      position: relative;
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: none;}
+    }
+    h2 {
+      color: var(--main-blue2);
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 22px;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    .form-group {
+      margin-bottom: 22px;
+    }
+    label {
+      font-weight: 600;
+      color: var(--main-blue2);
+      font-size: 1.07em;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 6px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 11px 13px;
+      border-radius: 8px;
+      border: 1.5px solid var(--main-border);
+      margin-top: 2px;
+      font-size: 1.09em;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+      background: #fafdff;
+      color: var(--main-blue2);
+    }
+    input[type="text"]:focus {
+      border-color: var(--main-blue2);
+      background: #f1f8e9;
+    }
+    button[type="submit"], #checkoutBtn {
+      background: linear-gradient(90deg, var(--main-blue) 60%, var(--main-blue2) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 0;
+      font-size: 1.09em;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 2px 8px #18315322;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 1px;
+    }
+    button[type="submit"]:hover, #checkoutBtn:hover {
+      background: linear-gradient(90deg, var(--main-blue2) 60%, var(--main-blue) 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    #message {
+      margin: 18px 0 0 0;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.08em;
+      min-height: 24px;
+    }
+    #bookingInfo {
+      margin-top: 28px;
+      background: #f2f7fa;
+      border-radius: 13px;
+      padding: 22px 18px 16px 18px;
+      font-size: 1.09em;
+      color: var(--main-blue2);
+      box-shadow: 0 1px 8px #1831530a;
+      animation: fadeIn 0.7s;
+    }
+    #bookingInfo strong {
+      color: var(--main-blue);
+    }
+    .info-row {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-row i {
+      color: var(--main-green);
+      min-width: 20px;
+    }
+    .paid { color: var(--main-green); font-weight: bold;}
+    .unpaid { color: #d32f2f; font-weight: bold;}
+    @media (max-width: 700px) {
+      .container { max-width: 98vw; padding: 18px 4vw; }
+      #bookingInfo { padding: 12px 4vw; }
+      .topbar { padding: 10px 10px; }
+      .topbar nav ul { gap: 10px; }
+      .topbar .logo { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo">THE COW HOTEL</div>
+    <nav>
+      <ul>
+        <li><a href="HomePage.html">Home</a></li>
+        <li><a href="Check-In.html">Check-In</a></li>
+        <li><a href="Check-Out.html" class="active">Check-Out</a></li>
+      </ul>
+    </nav>
+    <div>
+      <button class="book-btn" onclick="window.location.href='TIm_kiemphong.html'">Book Now</button>
+    </div>
+  </div>
+  <div class="container">
+    <h2><i class="fa-solid fa-door-open"></i> Check-Out</h2>
+    <form id="checkoutForm" autocomplete="off">
+      <div class="form-group">
+        <label for="bookingCode"><i class="fa-solid fa-key"></i> Nhập mã đặt phòng</label>
+        <input type="text" id="bookingCode" required placeholder="VD: BK20250519015">
+      </div>
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Kiểm tra & Trả phòng</button>
+      <div id="message"></div>
+    </form>
+    <div id="bookingInfo"></div>
+  </div>
+  <script>
+    document.getElementById('checkoutForm').onsubmit = function(e) {
+      e.preventDefault();
+      const code = document.getElementById('bookingCode').value.trim();
+      const msgDiv = document.getElementById('message');
+      const infoDiv = document.getElementById('bookingInfo');
+      msgDiv.textContent = '';
+      msgDiv.style.color = '';
+      infoDiv.innerHTML = '';
+
+      fetch('PHP/checkin_api.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ bookingCode: code })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          msgDiv.textContent = data.message || 'Có lỗi xảy ra!';
+          msgDiv.style.color = '#d32f2f';
+          infoDiv.innerHTML = '';
+          return;
+        }
+        const b = data.booking;
+        msgDiv.textContent = '';
+        infoDiv.innerHTML = `
+          <div class="info-row"><i class="fa-solid fa-bed"></i> <strong>Phòng:</strong> ${b.room}</div>
+          <div class="info-row"><i class="fa-solid fa-user"></i> <strong>Tên khách:</strong> ${b.fullname}</div>
+          <div class="info-row"><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> ${b.email}</div>
+          <div class="info-row"><i class="fa-solid fa-phone"></i> <strong>Điện thoại:</strong> ${b.phone}</div>
+          <div class="info-row"><i class="fa-solid fa-calendar-check"></i> <strong>Nhận phòng:</strong> ${b.checkin}</div>
+          <div class="info-row"><i class="fa-solid fa-calendar-xmark"></i> <strong>Trả phòng:</strong> ${b.checkout}</div>
+          <div class="info-row"><i class="fa-solid fa-money-bill-wave"></i> <strong>Trạng thái thanh toán:</strong> 
+            <span class="${b.TrangThaiThanhToan == 1 ? 'paid' : 'unpaid'}">
+              ${b.TrangThaiThanhToan == 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}
+            </span>
+          </div>
+          <button id="checkoutBtn" style="margin-top:18px;"><i class="fa-solid fa-door-open"></i> Xác nhận trả phòng</button>
+        `;
+
+        document.getElementById('checkoutBtn').onclick = function() {
+          fetch('PHP/checkout_api.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ bookingCode: b.bookingCode })
+          })
+          .then(res => res.json())
+          .then(result => {
+            if (result.success) {
+              msgDiv.textContent = 'Trả phòng thành công! Cảm ơn quý khách đã sử dụng dịch vụ.';
+              msgDiv.style.color = 'var(--main-green)';
+              infoDiv.innerHTML += `<div style="color:var(--main-green);font-weight:bold;margin-top:14px;text-align:center;"><i class="fa-solid fa-face-smile-beam"></i> Hẹn gặp lại quý khách!</div>`;
+            } else {
+              msgDiv.textContent = result.message || 'Trả phòng thất bại!';
+              msgDiv.style.color = '#d32f2f';
+            }
+          })
+          .catch(() => {
+            msgDiv.textContent = 'Có lỗi khi trả phòng!';
+            msgDiv.style.color = '#d32f2f';
+          });
+        };
+      })
+      .catch(() => {
+        msgDiv.textContent = 'Có lỗi xảy ra, vui lòng thử lại!';
+        msgDiv.style.color = '#d32f2f';
+        infoDiv.innerHTML = '';
+      });
+    };
+  </script>
+</body>
+</html>

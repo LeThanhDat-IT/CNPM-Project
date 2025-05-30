@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Phòng - THE COW HOTEL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            opacity: 0;
+            filter: blur(8px);
+            transition:
+                opacity 0.18s cubic-bezier(.4,0,.2,1),
+                filter 0.18s cubic-bezier(.4,0,.2,1),
+                transform 0.18s cubic-bezier(.4,0,.2,1);
+        }
+        body.page-loaded {
+            opacity: 1;
+            filter: blur(0);
+        }
+        body.fade-out {
+            opacity: 0;
+            filter: blur(8px);
+            transform: scale(0.98);
+        }
+        .topbar {
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 40px;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ffd700;
+        }
+        .topbar .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+        }
+        .topbar nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        .topbar nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .topbar nav ul li a:hover {
+            color: #e4a11b;
+        }
+        .book-btn {
+            background-color: #e4a11b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .book-btn:hover {
+            background-color: #c98f0b;
+        }
+        .section {
+            max-width: 1500px;      /* Tăng max-width để bảng rộng hơn */
+            margin: 40px auto;      /* Căn giữa và tạo khoảng trắng đều hai bên */
+            padding: 30px 32px;     /* Tăng padding ngang cho cân đối */
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border: 1px solid #ffd700;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+        .header img {
+            height: 52px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #0002;
+        }
+        .header h1 {
+            color: #1a2d6c;
+            font-size: 2em;
+            margin: 0;
+            font-weight: 700;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 18px;
+            
+        }
+        .form-group {
+            flex: 1 1 220px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+            
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #223b79;
+            letter-spacing: 0.5px;
+        }
+        input[type="text"], select {
+            padding: 12px 14px;
+            border: 1.5px solid #cfd8e3;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #f8fafc;
+            transition: border 0.2s;
+            border: 1px solid #898989;
+            box-shadow: 0 1px 4px rgba(34,59,121,0.1);
+        }
+        input[type="text"]:focus, select:focus {
+            border: 2px solid #e4a11b;
+            outline: none;
+            background: #fffbe6;
+        }
+        .form-actions {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+        .form-actions button {
+            background-color: #e4a11b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-actions button:hover {
+            background-color: #c98f0b;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 18px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(34,59,121,0.08);
+            border: 1.5px solid #e4a11b;
+        }
+        th, td {
+            padding: 16px 14px;
+            text-align: center;
+            font-size: 1.05em;
+            border-bottom: 1px solid #e4a11b;
+            white-space: nowrap;
+        }
+        th {
+            background: #e4a11b;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #fff;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        tr:hover {
+            background: #fffbe6;
+            cursor: pointer;
+        }
+        #room-table {
+            width: 100%;
+            min-width: 1400px;      /* Tăng min-width để bảng rộng hơn */
+            border-collapse: collapse;
+            
+        }
+
+        #room-table th, #room-table td {
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 16px;
+            min-width: 100px; /* Tăng min-width cho các cột */
+        }
+
+        #room-table th:nth-child(10), #room-table td:nth-child(10) { /* Cột Ảnh */
+            min-width: 90px;
+            max-width: 120px;
+        }
+
+        #room-table th:nth-child(11), #room-table td:nth-child(11) { /* Cột Sức chứa */
+            min-width: 90px;
+            max-width: 120px;
+        }
+        @media (max-width: 1300px) {
+            .section { max-width: 100vw; }
+            table { font-size: 0.95em; }
+            th, td { padding: 12px 6px; }
+        }
+        .custom-file-label {
+    display: inline-block;
+    background: #e4a11b;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    box-shadow: 0 2px 8px #0001;
+}
+.custom-file-label:hover {
+    background: #c98f0b;
+}
+.custom-file-label input[type="file"] {
+    display: none;
+}
+.custom-file-mini {
+    display: inline-flex;
+    align-items: center;
+    background: #f5f5f5;
+    color: #e4a11b;
+    border: 1.5px solid #e4a11b;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.2em;
+    margin-right: 10px;
+    box-shadow: 0 2px 8px #0001;
+    position: relative;
+}
+.custom-file-mini:hover {
+    background: #fffbe6;
+    color: #c98f0b;
+    border-color: #c98f0b;
+}
+.custom-file-mini input[type="file"] {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0; top: 0;
+    cursor: pointer;
+}
+#fileLabelText {
+    pointer-events: none;
+}
+.file-name-text {
+    font-size: 0.98em;
+    color: #223b79;
+    margin-left: 2px;
+    font-style: italic;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+}
+.form-group.capacity-group {
+    max-width: 110px;
+    min-width: 90px;
+    flex: 0 0 110px;
+    margin-right: 0;
+}
+#capacity {
+    width: 100%;
+    min-width: 0;
+    padding: 8px 8px;
+    border-radius: 8px;
+    border: 1.5px solid #e4a11b;
+    background: #fffbe6;
+    font-size: 1em;
+    text-align: center;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px #e4a11b22;
+}
+#capacity:focus {
+    border: 2px solid #c98f0b;
+    outline: none;
+    background: #fffde6;
+}
+.form-group.capacity-group label {
+    margin-bottom: 4px;
+    font-size: 0.98em;
+    color: #223b79;
+    font-weight: 600;
+    text-align: center;
+    display: block;
+}
+.form-row > div[style*="display: flex"] .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.form-row > div[style*="display: flex"] label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #223b79;
+    width: 100%;
+    text-align: center;
+}
+.form-row > div[style*="display: flex"] input[type="text"],
+.form-row > div[style*="display: flex"] input[type="number"] {
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+}
+#area, #capacity {
+    width: 90px;
+    max-width: 100px;
+    min-width: 0;
+    padding: 8px 8px;
+    border-radius: 8px;
+    border: 1.5px solid #e4a11b;
+    background: #fffbe6;
+    font-size: 1em;
+    text-align: center;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px #e4a11b22;
+}
+#area:focus, #capacity:focus {
+    border: 2px solid #c98f0b;
+    outline: none;
+    background: #fffde6;
+}
+.form-row .mini-group-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex: 2;
+    margin-left: auto;
+    margin-right: 0;
+}
+.form-row .mini-group-row .form-group {
+    flex: 0 0 auto;
+    min-width: unset;
+    max-width: unset;
+    margin-bottom: 0;
+    align-items: center;
+}
+#user-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#user-action > span {
+  font-weight: 600;
+  margin-right: 18px;
+  display: flex;
+  align-items: center;
+  color: #222;
+  font-size: 16px;
+}
+
+#user-action > span i {
+  margin-right: 7px;
+  font-size: 18px;
+}
+
+#user-action ul {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#user-action ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#user-action ul li a.admin-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  background: none;
+  border: none;
+  padding: 0 10px;
+  border-radius: 0;
+  font-size: 16px;
+  transition: color 0.25s, background 0.25s;
+  display: inline-block;
+  outline: none;
+  height: 40px;
+  line-height: 40px;
+  min-width: 80px;
+  text-align: center;
+}
+
+#user-action ul li a.admin-link:hover,
+#user-action ul li a.admin-link:focus {
+  color: #e4a11b;
+  background: #f7f1e1;
+  text-decoration: none;
+}
+
+#user-action ul li a.admin-link[style*="color:#888"] {
+  color: #888 !important;
+}
+
+#user-action ul li:last-child a.admin-link {
+  color: #888;
+}
+    </style>
+</head>
+<body>
+<div class="topbar">
+    <div class="logo">THE COW HOTEL</div>
+    <nav>
+        <ul>
+            <li><a href="HomePage.html">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#rooms">Rooms</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div id="user-action"></div>
+</div>
+<div class="section">
+    <div class="header">
+        <img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
+        <h1><i class="fa-solid fa-bed"></i> Quản Lý Phòng</h1>
+    </div>
+    <form id="room-form" autocomplete="off">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="maPhong">Mã phòng</label>
+                <input type="text" id="maPhong" placeholder="Tự động" readonly>
+            </div>
+            <div class="form-group">
+                <label for="room-name">Tên phòng</label>
+                <input type="text" id="room-name" placeholder="Nhập tên phòng...">
+            </div>
+            <div class="form-group">
+                <label for="room-type">Kiểu phòng</label>
+                <select id="room-type">
+                    <option value="">Chọn kiểu phòng</option>
+                    <option value="1">Thường</option>
+                    <option value="2">Cao cấp</option>
+                    <option value="3">VIP</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="room-price">Giá phòng (VNĐ)</label>
+                <input type="text" id="room-price" placeholder="VD: 400000">
+            </div>
+            <div class="form-group">
+                <label for="room-status">Tình trạng</label>
+                <select id="room-status">
+                    <option value="">Chọn tình trạng</option>
+                    <option value="1">Còn trống</option>
+                    <option value="0">Đã thuê</option>
+                    <option value="2">Bảo trì</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bed-type">Loại giường</label>
+                <input type="text" id="bed-type" placeholder="VD: 1 giường đôi">
+            </div>
+            <div class="form-group" style="flex:2;">
+                <label for="amenities">Tiện nghi</label>
+                <input type="text" id="amenities" placeholder="VD: Wifi, TV, Điều hòa">
+            </div>
+            <div class="mini-group-row">
+                <div class="form-group">
+                    <label for="area" style="text-align:center; width:100%;">Diện tích</label>
+                    <input type="text" id="area" placeholder="VD: 25m²" style="text-align:center;">
+                </div>
+                <div class="form-group">
+                    <label for="hinhAnh" style="text-align:center; width:100%;">Chọn ảnh</label>
+                    <label class="custom-file-mini" style="margin:auto;">
+                        <input type="file" id="hinhAnhFile" accept="image/*">
+                        <span id="fileLabelText"><i class="fa fa-image"></i></span>
+                    </label>
+                    <span id="fileNameText" class="file-name-text"></span>
+                    <input type="hidden" id="hinhAnh" name="hinhAnh">
+                    <img id="previewImage" src="" alt="Preview" style="display:none;max-width:160px;max-height: 100px;margin:8px auto 0 auto;border-radius:8px;">
+                </div>
+                <div class="form-group capacity-group">
+                    <label for="capacity" style="text-align:center; width:100%;">Sức chứa</label>
+                    <input type="number" id="capacity" min="1" placeholder="VD: 2" style="text-align:center;">
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" id="btn-add"><i class="fa-solid fa-plus"></i> Thêm</button>
+            <button type="button" id="btn-update"><i class="fa-solid fa-pen"></i> Cập nhật</button>
+            <button type="button" id="btn-delete"><i class="fa-solid fa-trash"></i> Xóa</button>
+            <button type="button" id="btn-search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+            <button type="button" id="btn-showall"><i class="fa-solid fa-list"></i> Hiển thị tất cả</button>
+        </div>
+    </form>
+    <table id="room-table">
+        <thead>
+        <tr>
+            <th>Mã phòng</th>
+            <th>Tên phòng</th>
+            <th>Kiểu phòng</th>
+            <th>Giá phòng</th>
+            <th>Tình trạng</th>
+            <th>Loại giường</th>
+            <th>Tiện nghi</th>
+            <th>Diện tích</th>
+            <th>Ảnh</th>
+            <th>Sức chứa</th> <!-- Thêm cột Sức chứa -->
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Dữ liệu phòng sẽ được hiển thị ở đây -->
+        </tbody>
+    </table>
+</div>
+<script>
+    let rooms = [];
+
+    async function fetchRoomList() {
+        try {
+            const res = await fetch('PHP/get_phong.php');
+            if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu phòng');
+            const data = await res.json();
+            rooms = data;
+            renderRoomList();
+        } catch (e) {
+            alert('Không thể tải danh sách phòng từ server!');
+        }
+    }
+
+    function getTypeText(type) {
+        if (type === '1') return 'Thường';
+        if (type === '2') return 'Cao cấp';
+        if (type === '3') return 'VIP';
+        return '';
+    }
+    function getStatusText(status) {
+        if (status === '1') return 'Còn trống';
+        if (status === '0') return 'Đã thuê';
+        if (status === '2') return 'Bảo trì';
+        return '';
+    }
+
+    function renderRoomList(list = rooms) {
+        const tbody = document.querySelector('#room-table tbody');
+        tbody.innerHTML = '';
+        list.forEach(room => {
+            const row = document.createElement('tr');
+            const capacity = room.sucChua ? `${room.sucChua} người` : 'Chưa cập nhật';
+            row.innerHTML = `
+                <td>${room.maPhong}</td>
+                <td>${room.tenPhong}</td>
+                <td>${getTypeText(room.kieuPhong)}</td>
+                <td>${Number(room.giaPhong).toLocaleString()} đ</td>
+                <td>${getStatusText(room.tinhTrang)}</td>
+                <td>${room.loaiGiuong || ''}</td>
+                <td>${room.tienNghi || ''}</td>
+                <td>${room.dienTich || ''}</td>
+                <td>${room.hinhAnh ? `<img src="${room.hinhAnh}" alt="" style="width:48px;height:32px;object-fit:cover;border-radius:6px;">` : ''}</td>
+                <td>${capacity}</td>
+            `;
+            row.onclick = () => {
+                document.getElementById('maPhong').value = room.maPhong;
+                document.getElementById('room-name').value = room.tenPhong;
+                document.getElementById('room-type').value = String(room.kieuPhong);
+                document.getElementById('room-price').value = room.giaPhong;
+                document.getElementById('room-status').value = String(room.tinhTrang);
+                document.getElementById('bed-type').value = room.loaiGiuong || '';
+                document.getElementById('amenities').value = room.tienNghi || '';
+                document.getElementById('area').value = room.dienTich || '';
+                document.getElementById('hinhAnh').value = room.hinhAnh || '';
+                document.getElementById('capacity').value = room.sucChua || '';
+
+                // Hiện ảnh preview nếu có
+                const preview = document.getElementById('previewImage');
+                if (room.hinhAnh) {
+                    preview.src = room.hinhAnh;
+                    preview.style.display = 'block';
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                }
+
+                // Reset tên file về "No file chosen"
+                document.getElementById('fileNameText').textContent = 'No file chosen';
+            };
+            tbody.appendChild(row);
+        });
+    }
+
+    async function addRoom() {
+        const data = getFormData();
+        // Kiểm tra các trường bắt buộc
+        if (!data.name || !data.type || !data.price || !data.status) {
+            alert('Vui lòng nhập đầy đủ thông tin phòng!');
+            return;
+        }
+        const res = await fetch('PHP/add_phong.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        alert(result.success ? 'Thêm phòng thành công!' : (result.message || 'Thêm phòng thất bại!'));
+        fetchRoomList();
+    }
+
+
+    async function updateRoom() {
+        const data = getFormData();
+        if (!data.maPhong) {
+            alert('Vui lòng chọn phòng để cập nhật!');
+            return;
+        }
+        // Kiểm tra các trường bắt buộc
+        if (!data.name || !data.type || !data.price || !data.status) {
+            alert('Vui lòng nhập đầy đủ thông tin phòng!');
+            return;
+        }
+        const res = await fetch('PHP/update_phong.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        alert(result.success ? 'Cập nhật phòng thành công!' : (result.message || 'Cập nhật phòng thất bại!'));
+        fetchRoomList();
+    }
+
+    async function deleteRoom() {
+        // Xóa phòng phải truyền đúng tên phòng cho API
+        const tenPhong = document.getElementById('room-name').value;
+        if (!tenPhong) {
+            alert('Vui lòng chọn phòng để xóa!');
+            return;
+        }
+        if (!confirm('Bạn có chắc muốn xóa phòng này?')) return;
+        const res = await fetch('PHP/delete_phong.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: tenPhong })
+        });
+        const result = await res.json();
+        alert(result.success ? 'Xóa phòng thành công!' : (result.message || 'Xóa phòng thất bại!'));
+        fetchRoomList();
+    }
+
+    function searchRoom() {
+        const tenPhong = document.getElementById('room-name').value.trim();
+        const result = rooms.filter(r => r.tenPhong && r.tenPhong.toLowerCase().includes(tenPhong.toLowerCase()));
+        renderRoomList(result);
+    }
+
+    function getFormData() {
+        let sucChua = document.getElementById('capacity').value;
+        sucChua = sucChua === '' ? null : Number(sucChua);
+        return {
+            name: document.getElementById('room-name').value,
+            type: document.getElementById('room-type').value,
+            price: document.getElementById('room-price').value,
+            status: document.getElementById('room-status').value,
+            hinhAnh: document.getElementById('hinhAnh').value,
+            bedType: document.getElementById('bed-type').value,
+            amenities: document.getElementById('amenities').value,
+            area: document.getElementById('area').value,
+            sucChua: sucChua,
+            maPhong: document.getElementById('maPhong').value
+        };
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchRoomList();
+
+        document.getElementById('btn-add').addEventListener('click', addRoom);
+        document.getElementById('btn-update').addEventListener('click', updateRoom);
+        document.getElementById('btn-delete').addEventListener('click', deleteRoom);
+        document.getElementById('btn-search').addEventListener('click', searchRoom);
+        document.getElementById('btn-showall').addEventListener('click', fetchRoomList);
+    });
+
+    // Copy phần renderUserAction và logout từ HomePage.html
+    function renderUserAction() {
+  const userAction = document.getElementById('user-action');
+  const username = localStorage.getItem('username');
+  const role = localStorage.getItem('role');
+  if (username) {
+    let adminLinks = '';
+    if (role === 'admin') {
+      adminLinks = `
+        <li><a href="QuanLyKhachHang.html" class="admin-link">Quản lý KH</a></li>
+        <li><a href="QuanLyPhong.html" class="admin-link">Quản lý Phòng</a></li>
+        <li><a href="QuanLyDatPhong.html" class="admin-link">Quản lý ĐP</a></li>
+        <li><a href="quanly_tk.html" class="admin-link">Quản lý TK</a></li>
+        <li><a href="ThongKeThuNhap.html" class="admin-link">Thống kê</a></li>
+      `;
+    }
+    userAction.innerHTML = `
+      <span style="font-weight:600;margin-right:16px;display:flex;align-items:center;"><i class="fa fa-user"></i> ${username}</span>
+      <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
+        ${adminLinks}
+        
+        <li><a href="#" class="admin-link" onclick="logout();return false;" style="color:#888;">Logout</a></li>
+      </ul>
+    `;
+  } else {
+    userAction.innerHTML = `
+      <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
+        <li><a href="dangnhap.html" class="admin-link"><i class="fa fa-user"></i> Login</a></li>
+        <li><a href="TIm_kiemphong.html" class="admin-link">Book Now</a></li>
+      </ul>
+    `;
+  }
+}
+    function logout() {
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      renderUserAction();
+    }
+    renderUserAction();
+
+    // Hiệu ứng fade-in khi vào trang
+    window.addEventListener('DOMContentLoaded', function () {
+      document.body.classList.add('page-loaded');
+    });
+
+    // Hàm chuyển trang với hiệu ứng fade-out
+    function goToPageWithFade(url) {
+      document.body.classList.remove('page-loaded');
+      document.body.classList.add('fade-out');
+      setTimeout(function () {
+        window.location.href = url;
+      }, 180); // khớp với thời gian transition
+    }
+
+    // Gắn lại hiệu ứng cho các link trên topbar (nếu có)
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.topbar nav ul li a').forEach(link => {
+        link.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (href && href !== '#') {
+            e.preventDefault();
+            goToPageWithFade(href);
+          }
+        });
+      });
+    });
+    document.getElementById('hinhAnhFile').addEventListener('change', async function() {
+    const file = this.files[0];
+    const preview = document.getElementById('previewImage');
+    const fileNameText = document.getElementById('fileNameText');
+    if (file) {
+        fileNameText.textContent = file.name;
+        // Hiển thị ảnh preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        fileNameText.textContent = 'No file chosen';
+        preview.src = '';
+        preview.style.display = 'none';
+    }
+
+    // Upload ảnh như cũ
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const res = await fetch('PHP/upload_image.php', {
+        method: 'POST',
+        body: formData
+    });
+    const result = await res.json();
+    if (result.success) {
+        document.getElementById('hinhAnh').value = result.path;
+        alert('Upload ảnh thành công!');
+    } else {
+        alert(result.message || 'Upload ảnh thất bại!');
+        document.getElementById('hinhAnh').value = '';
+    }
+});
+</script>
+</body>
+</html>

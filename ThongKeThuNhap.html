@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thống Kê Doanh Thu Theo Ngày - THE COW HOTEL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      opacity: 0;
+      filter: blur(8px);
+      transition:
+        opacity 0.18s cubic-bezier(.4,0,.2,1),
+        filter 0.18s cubic-bezier(.4,0,.2,1),
+        transform 0.18s cubic-bezier(.4,0,.2,1);
+    }
+    body.page-loaded {
+      opacity: 1;
+      filter: blur(0);
+    }
+    body.fade-out {
+      opacity: 0;
+      filter: blur(8px);
+      transform: scale(0.98);
+    }
+    .topbar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 40px;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border: 1px solid #ffd700
+    }
+    .topbar .logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+    }
+    .topbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+    .topbar nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      font-size: 1em;
+      transition: color 0.3s;
+    }
+    .topbar nav ul li a:hover {
+      color: #e4a11b;
+    }
+    .book-btn {
+      background-color: #e4a11b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .book-btn:hover {
+      background-color: #c98f0b;
+    }
+    .section {
+      max-width: 1250px;
+      margin: 40px auto;
+      padding: 30px 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border: 1px solid #ffd700;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .header img {
+      height: 52px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0002;
+    }
+    .header h1 {
+      color: #1a2d6c;
+      font-size: 2em;
+      margin: 0;
+      font-weight: 700;
+    }
+    .nav {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 32px;
+      margin-top: 10px;
+    }
+    .nav a {
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #1a2d6c 60%, #d10000 100%);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(34,59,121,0.08);
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .nav a:hover, .nav a.active {
+      background: linear-gradient(90deg, #d10000 60%, #1a2d6c 100%);
+      transform: translateY(-2px) scale(1.03);
+      color: #fff;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 28px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .filter-bar label {
+      font-weight: 600;
+      color: #223B79;
+      font-size: 1.08em;
+    }
+    .filter-bar input[type="date"] {
+      padding: 10px 14px;
+      border: 1.5px solid #cfd8e3;
+      border-radius: 7px;
+      font-size: 1.08em;
+      background: #f8fafc;
+      transition: border 0.2s;
+    }
+    .filter-bar input[type="date"]:focus {
+      border-color: #1a2d6c;
+      outline: none;
+    }
+    .filter-bar button {
+      padding: 10px 28px;
+      border: none;
+      border-radius: 7px;
+      background: #e4a11b;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.08em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(34,59,121,0.08);
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-bar button:hover {
+      background: #c98f0b;
+      transform: translateY(-2px) scale(1.03);
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 18px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(34,59,121,0.08);
+      border: 1.5px solid #e4a11b;
+    }
+    th, td {
+      padding: 16px 14px;
+      text-align: center;
+      font-size: 1.05em;
+      border-bottom: 1px solid #e4a11b;
+      white-space: nowrap;
+    }
+    th {
+      background: #e4a11b;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #fff;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    tr:hover {
+      background: #fffbe6;
+      cursor: pointer;
+    }
+    .total-revenue-bar {
+      text-align: right;
+      margin-top: 22px;
+      font-size: 1.15em;
+      font-weight: 600;
+      color: #223B79;
+      position: relative;
+      z-index: 1;
+    }
+    .total-revenue-bar .icon {
+      color: #d10000;
+      margin-right: 7px;
+      font-size: 1.2em;
+      vertical-align: -2px;
+    }
+    .total-revenue-bar .value {
+      color: #d10000;
+      font-size: 1.18em;
+      font-weight: bold;
+      margin-left: 4px;
+    }
+    .no-data {
+      color: #888;
+      font-style: italic;
+      font-size: 1.08em;
+      padding: 30px 0;
+      background: #fff;
+    }
+    #user-action {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #user-action > span {
+      font-weight: 600;
+      margin-right: 18px;
+      display: flex;
+      align-items: center;
+      color: #222;
+      font-size: 16px;
+    }
+
+    #user-action > span i {
+      margin-right: 7px;
+      font-size: 18px;
+    }
+
+    #user-action ul {
+      display: flex;
+      gap: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #user-action ul li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #user-action ul li a.admin-link {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      background: none;
+      border: none;
+      padding: 0 10px;
+      border-radius: 0;
+      font-size: 16px;
+      transition: color 0.25s, background 0.25s;
+      display: inline-block;
+      outline: none;
+      height: 40px;
+      line-height: 40px;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    #user-action ul li a.admin-link:hover,
+    #user-action ul li a.admin-link:focus {
+      color: #e4a11b;
+      background: #f7f1e1;
+      text-decoration: none;
+    }
+
+    #user-action ul li a.admin-link[style*="color:#888"] {
+      color: #888 !important;
+    }
+
+    #user-action ul li:last-child a.admin-link {
+      color: #888;
+    }
+
+    @media (max-width: 1300px) {
+      .section { max-width: 100vw; }
+      table { font-size: 0.95em; }
+      th, td { padding: 12px 6px; }
+    }
+  </style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">THE COW HOTEL</div>
+  <nav>
+    <ul>
+      <li><a href="HomePage.html">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#rooms">Rooms</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div id="user-action"></div>
+</div>
+<div class="section">
+  <div class="header">
+    <img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
+    <h1><i class="fa-solid fa-chart-line" style="color:#d10000;margin-right:10px;"></i>Thống Kê Doanh Thu Theo Ngày</h1>
+  </div>
+  <div class="filter-bar">
+    <label for="filter-date"><i class="fa-regular fa-calendar-days"></i> Chọn ngày:</label>
+    <input type="date" id="filter-date">
+    <button id="stats-btn"><i class="fa-solid fa-magnifying-glass-chart"></i> Xem thống kê</button>
+  </div>
+  <table id="income-table">
+    <thead>
+      <tr>
+        <th>Mã phòng</th>
+        <th>Tên phòng</th>
+        <th>Tên khách</th>
+        <th>Thời gian đặt</th>
+        <th>Tổng tiền</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dữ liệu sẽ được render bằng JS -->
+    </tbody>
+  </table>
+  <div class="total-revenue-bar">
+    <span class="icon"><i class="fa-solid fa-coins"></i></span>
+    Tổng doanh thu ngày:
+    <span id="total-revenue" class="value">0 đ</span>
+  </div>
+</div>
+<script>
+function formatCurrency(num) {
+  return Number(num).toLocaleString('vi-VN') + ' đ';
+}
+
+function renderTable(data) {
+  const tbody = document.querySelector("#income-table tbody");
+  tbody.innerHTML = "";
+  let total = 0;
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="no-data"><i class="fa-regular fa-face-frown"></i> Không có dữ liệu</td></tr>`;
+  } else {
+    data.forEach(row => {
+      total += Number(row.total);
+      tbody.innerHTML += `
+        <tr>
+          <td>${row.roomId}</td>
+          <td>${row.roomName || '-'}</td>
+          <td>${row.customerName}</td>
+          <td>${row.date ? row.date.split('-').reverse().join('-') : ''}</td>
+          <td style="color:#d10000;font-weight:600;">${formatCurrency(row.total)}</td>
+        </tr>
+      `;
+    });
+  }
+  document.getElementById('total-revenue').textContent = formatCurrency(total);
+}
+
+async function fetchIncome() {
+  const filterDate = document.getElementById('filter-date').value;
+  if (!filterDate) {
+    renderTable([]);
+    return;
+  }
+  const res = await fetch(`PHP/get_income.php?type=Theo ngày&date=${encodeURIComponent(filterDate)}&t=${Date.now()}`);
+  const data = await res.json();
+  renderTable(data);
+}
+
+document.getElementById('stats-btn').addEventListener('click', fetchIncome);
+window.addEventListener('DOMContentLoaded', () => {
+  // Đặt mặc định ngày hôm nay cho input date
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('filter-date').value = today;
+  fetchIncome();
+  renderUserAction();
+});
+
+// Hiệu ứng fade-in khi vào trang
+window.addEventListener('DOMContentLoaded', function () {
+  document.body.classList.add('page-loaded');
+});
+
+// Hàm chuyển trang với hiệu ứng fade-out
+function goToPageWithFade(url) {
+  document.body.classList.remove('page-loaded');
+  document.body.classList.add('fade-out');
+  setTimeout(function () {
+    window.location.href = url;
+  }, 180); // khớp với thời gian transition
+}
+
+// Gắn lại hiệu ứng cho các nút chuyển trang trong user-action
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('#user-action .book-btn').forEach(btn => {
+    const onclick = btn.getAttribute('onclick');
+    if (onclick && onclick.includes("window.location.href")) {
+      btn.onclick = function (e) {
+        e.preventDefault();
+        const url = onclick.match(/'([^']+)'/)[1];
+        goToPageWithFade(url);
+      };
+    }
+  });
+  // Các link trên topbar nếu có
+  document.querySelectorAll('.topbar nav ul li a').forEach(link => {
+    link.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href && href !== '#') {
+        e.preventDefault();
+        goToPageWithFade(href);
+      }
+    });
+  });
+});
+
+// Copy phần renderUserAction và logout từ HomePage.html
+function renderUserAction() {
+  const userAction = document.getElementById('user-action');
+  const username = localStorage.getItem('username');
+  const role = localStorage.getItem('role');
+  if (username) {
+    let adminLinks = '';
+    if (role === 'admin') {
+      adminLinks = `
+        <li><a href="QuanLyKhachHang.html" class="admin-link">Quản lý KH</a></li>
+        <li><a href="QuanLyPhong.html" class="admin-link">Quản lý Phòng</a></li>
+        <li><a href="QuanLyDatPhong.html" class="admin-link">Quản lý ĐP</a></li>
+        <li><a href="quanly_tk.html" class="admin-link">Quản lý TK</a></li>
+        <li><a href="ThongKeThuNhap.html" class="admin-link">Thống kê</a></li>
+      `;
+    }
+    userAction.innerHTML = `
+      <span style="font-weight:600;margin-right:16px;display:flex;align-items:center;">
+        <i class="fa fa-user"></i> ${username}
+      </span>
+      <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
+        ${adminLinks}
+        
+        <li><a href="#" class="admin-link" onclick="logout();return false;" style="color:#888;">Logout</a></li>
+      </ul>
+    `;
+  } else {
+    userAction.innerHTML = `
+      <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
+        <li><a href="dangnhap.html" class="admin-link"><i class="fa fa-user"></i> Login</a></li>
+        <li><a href="TIm_kiemphong.html" class="admin-link">Book Now</a></li>
+      </ul>
+    `;
+  }
+}
+function logout() {
+  localStorage.removeItem('username');
+  localStorage.removeItem('role');
+  localStorage.removeItem('user_email');
+  renderUserAction();
+}
+</script>
+</body>
+</html>

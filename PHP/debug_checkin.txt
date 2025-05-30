@@ -1,0 +1,19 @@
+Array
+(
+    [id] => 151
+    [room] => R001
+    [roomName] => VIP
+    [fullname] => thành đạt
+    [gioiTinh] => Nam
+    [ngaySinh] => 2004-07-02
+    [diaChi] => 189
+    [phone] => 0258741963
+    [email] => lt@gmail.com
+    [checkin] => 2025-05-31
+    [total] => 4000000
+    [checkout] => 2025-06-02
+    [time] => 2025-05-31 00:02:05
+    [bookingCode] => TCH20250530151
+    [TrangThaiThanhToan] => 1
+    [TrangThaiPhong] => 1
+)

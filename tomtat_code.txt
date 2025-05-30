@@ -1,0 +1,36 @@
+Tóm tắt nội dung code các file chính:
+
+1. dangky_visitor.html
+- Giao diện form đăng ký tài khoản người dùng.
+- Thu thập các trường: họ tên, số điện thoại, email, giới tính, ngày sinh, địa chỉ, tên đăng nhập, mật khẩu, xác nhận mật khẩu, đồng ý điều khoản.
+- Gửi dữ liệu qua POST đến PHP/register.php để xử lý đăng ký.
+
+2. PHP/register.php
+- Nhận dữ liệu từ form đăng ký.
+- Kiểm tra đầy đủ thông tin, kiểm tra mật khẩu và xác nhận mật khẩu.
+- Mã hóa mật khẩu, lưu thông tin vào bảng users trong database.
+- Trả về thông báo thành công hoặc lỗi.
+
+3. PHP/login.php
+- Nhận dữ liệu đăng nhập từ form (username, password).
+- Kiểm tra thông tin với database (bảng users).
+- Nếu đúng trả về "Đăng nhập thành công!", nếu sai trả về lỗi tương ứng.
+
+4. PHP/connect.php
+- Kết nối tới database MySQL (cnpm_db) bằng tài khoản root.
+- Sử dụng mysqli để kết nối, trả về thông báo thành công hoặc lỗi kết nối.
+
+5. dangnhap.html
+- Giao diện form đăng nhập người dùng và admin.
+- Form đăng nhập người dùng gửi POST đến PHP/login.php.
+- Đăng nhập admin hiện vẫn dùng localStorage (nếu muốn có thể chuyển sang PHP tương tự).
+
+6. test_connect.php
+- Kết nối database và truy vấn thử dữ liệu từ bảng bookings.
+- Hiển thị dữ liệu hoặc thông báo không có dữ liệu/lỗi truy vấn.
+
+7. Cấu trúc bảng users (MySQL):
+- Các trường: id, name, phone, email, gender, dob, address, username, password.
+- username và email là duy nhất, password được mã hóa.
+
+Tóm lại: Toàn bộ hệ thống gồm giao diện HTML gửi dữ liệu đến PHP để xử lý, PHP thao tác trực tiếp với database MySQL qua file connect.php, các chức năng chính là đăng ký, đăng nhập, kiểm tra kết nối và truy vấn dữ liệu.

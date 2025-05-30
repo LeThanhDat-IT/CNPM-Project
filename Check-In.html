@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Check-In - THE COW HOTEL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --main-bg: #f5f5f5;
+      --main-blue: #183153;
+      --main-blue2: #2d4379;
+      --main-yellow: #e4a11b;
+      --main-green: #2e7d32;
+      --main-green2: #43a047;
+      --main-border: #b2dfdb;
+      --main-white: #fff;
+      --main-shadow: 0 6px 32px #18315318;
+      --main-radius: 18px;
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--main-bg);
+      margin: 0;
+      color: var(--main-blue);
+      min-height: 100vh;
+    }
+    .topbar {
+      background: var(--main-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 40px;
+      border-bottom: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px #1831530a;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--main-blue);
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #1831530a;
+    }
+    .topbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+      margin: 0;
+      padding: 0;
+    }
+    .topbar nav ul li a {
+      text-decoration: none;
+      color: var(--main-blue2);
+      font-weight: 600;
+      font-size: 1.08em;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .topbar nav ul li a:hover,
+    .topbar nav ul li a.active {
+      color: var(--main-yellow);
+      border-bottom: 2.5px solid var(--main-yellow);
+    }
+    .book-btn {
+      background: var(--main-yellow);
+      color: var(--main-white);
+      border: none;
+      padding: 10px 26px;
+      font-weight: bold;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 1.08em;
+      box-shadow: 0 2px 8px #e4a11b22;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 1px;
+    }
+    .book-btn:hover {
+      background: #c98f0b;
+      transform: translateY(-2px) scale(1.03);
+    }
+    .container {
+      max-width: 430px;
+      margin: 56px auto 0 auto;
+      background: var(--main-white);
+      border-radius: var(--main-radius);
+      box-shadow: var(--main-shadow);
+      padding: 38px 32px 28px 32px;
+      position: relative;
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: none;}
+    }
+    h2 {
+      color: var(--main-blue2);
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 22px;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    .form-group {
+      margin-bottom: 22px;
+    }
+    label {
+      font-weight: 600;
+      color: var(--main-blue2);
+      font-size: 1.07em;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 6px;
+    }
+    input[type="text"], input[type="date"], select {
+      width: 100%;
+      padding: 11px 13px;
+      border-radius: 8px;
+      border: 1.5px solid var(--main-border);
+      margin-top: 2px;
+      font-size: 1.09em;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+      background: #fafdff;
+      color: var(--main-blue2);
+    }
+    input[type="text"]:focus, input[type="date"]:focus, select:focus {
+      border-color: var(--main-blue2);
+      background: #f1f8e9;
+    }
+    button[type="submit"], #payBtn, #checkinBtn {
+      background: linear-gradient(90deg, var(--main-blue) 60%, var(--main-blue2) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 0;
+      font-size: 1.09em;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 2px 8px #18315322;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 1px;
+    }
+    button[type="submit"]:hover, #payBtn:hover, #checkinBtn:hover {
+      background: linear-gradient(90deg, var(--main-blue2) 60%, var(--main-blue) 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    #message {
+      margin: 18px 0 0 0;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.08em;
+      min-height: 24px;
+    }
+    #bookingInfo {
+      margin-top: 28px;
+      background: #f2f7fa;
+      border-radius: 13px;
+      padding: 22px 18px 16px 18px;
+      font-size: 1.09em;
+      color: var(--main-blue2);
+      box-shadow: 0 1px 8px #1831530a;
+      animation: fadeIn 0.7s;
+    }
+    #bookingInfo strong {
+      color: var(--main-blue);
+    }
+    .info-row {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-row i {
+      color: var(--main-green);
+      min-width: 20px;
+    }
+    .paid { color: var(--main-green); font-weight: bold;}
+    .unpaid { color: #d32f2f; font-weight: bold;}
+    @media (max-width: 700px) {
+      .container { max-width: 98vw; padding: 18px 4vw; }
+      #bookingInfo { padding: 12px 4vw; }
+      .topbar { padding: 10px 10px; }
+      .topbar nav ul { gap: 10px; }
+      .topbar .logo { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo">THE COW HOTEL</div>
+    <nav>
+      <ul>
+        <li><a href="HomePage.html">Home</a></li>
+        <li><a href="Check-In.html" class="active">Check-In</a></li>
+        <li><a href="Check-Out.html">Check-Out</a></li>
+      </ul>
+    </nav>
+    <div>
+      <button class="book-btn" onclick="window.location.href='TIm_kiemphong.html'">Book Now</button>
+    </div>
+  </div>
+  <div class="container">
+    <h2><i class="fa-solid fa-key"></i> Check-In</h2>
+    <form id="checkinForm" autocomplete="off">
+      <div class="form-group">
+        <label for="bookingCode"><i class="fa-solid fa-barcode"></i> Nhập mã đặt phòng</label>
+        <input type="text" id="bookingCode" required placeholder="VD: BK20250519015">
+      </div>
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Kiểm tra & Check-in</button>
+      <div id="message"></div>
+    </form>
+    <div id="bookingInfo"></div>
+  </div>
+  <script>
+    // Giá phòng
+    const roomPrices = {
+      'Phòng Gia Đình': 360000,
+      'Phòng Đôi Cao Cấp': 1200000,
+      'Phòng Mini': 200000,
+      'Phòng Tình Nhân': 560000
+    };
+
+    function getTotalAmount(booking) {
+      if (!booking) return 0;
+      if (booking.total) return Number(booking.total); // Ưu tiên lấy từ DB
+      const price = roomPrices[booking.room] || 0;
+      const checkin = new Date(booking.checkin);
+      const checkout = new Date(booking.checkout);
+      let nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+      if (nights < 1) nights = 1;
+      return price * nights;
+    }
+
+    document.getElementById('checkinForm').onsubmit = function(e) {
+      e.preventDefault();
+      const code = document.getElementById('bookingCode').value.trim();
+      const msgDiv = document.getElementById('message');
+      const infoDiv = document.getElementById('bookingInfo');
+      msgDiv.textContent = '';
+      msgDiv.style.color = '';
+      infoDiv.innerHTML = '';
+
+      fetch('PHP/checkin_api.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ bookingCode: code })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          msgDiv.textContent = data.message || 'Có lỗi xảy ra!';
+          msgDiv.style.color = '#d32f2f';
+          infoDiv.innerHTML = '';
+          return;
+        }
+
+        const b = data.booking;
+        msgDiv.textContent = '';
+
+        // Nếu đã thanh toán
+        if (b.TrangThaiThanhToan == 1 || b.TrangThaiThanhToan == "1") {
+          infoDiv.innerHTML = `
+            <div class="info-row"><i class="fa-solid fa-bed"></i> <strong>Phòng:</strong> ${b.room}</div>
+            <div class="info-row"><i class="fa-solid fa-user"></i> <strong>Tên khách:</strong> ${b.fullname}</div>
+            <div class="info-row"><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> ${b.email}</div>
+            <div class="info-row"><i class="fa-solid fa-phone"></i> <strong>Điện thoại:</strong> ${b.phone}</div>
+            <div class="info-row"><i class="fa-solid fa-calendar-check"></i> <strong>Nhận phòng:</strong> ${b.checkin}</div>
+            <div class="info-row"><i class="fa-solid fa-calendar-xmark"></i> <strong>Trả phòng:</strong> ${b.checkout}</div>
+            <div class="info-row"><i class="fa-solid fa-money-bill-wave"></i> <strong>Trạng thái thanh toán:</strong> 
+              <span class="paid">Đã thanh toán</span>
+            </div>
+            <button id="checkinBtn" style="margin-top:14px;"><i class="fa-solid fa-door-open"></i> Check-in</button>
+            <div id="checkinMsg" style="margin-top:10px;text-align:center;"></div>
+          `;
+          document.getElementById('checkinBtn').onclick = function() {
+            fetch('PHP/checkin_api.php', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ bookingCode: b.bookingCode, action: 'checkin' })
+            })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                document.getElementById('checkinMsg').innerHTML = `<span style="color:var(--main-green);font-weight:bold;"><i class="fa-solid fa-circle-check"></i> Check-in thành công!</span>`;
+              } else {
+                document.getElementById('checkinMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">${data.message || 'Check-in thất bại!'}</span>`;
+              }
+            })
+            .catch(() => {
+              document.getElementById('checkinMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">Có lỗi khi check-in!</span>`;
+            });
+          };
+          return;
+        }
+
+        // Nếu chưa thanh toán
+        const total = getTotalAmount(b);
+        const moneyStr = total.toLocaleString('vi-VN') + 'đ';
+        const qrImg = `<img src="https://img.vietqr.io/image/TPB-23402072004-compact2.png?amount=${total}&addInfo=THANHTOAN%20${b.bookingCode}" alt="QR chuyển khoản TPBank" style="width:160px; border-radius:10px; box-shadow:0 2px 8px #0001; margin-bottom:6px;">`;
+
+        infoDiv.innerHTML = `
+          <div class="info-row"><i class="fa-solid fa-bed"></i> <strong>Phòng:</strong> ${b.room}</div>
+          <div class="info-row"><i class="fa-solid fa-user"></i> <strong>Tên khách:</strong> ${b.fullname}</div>
+          <div class="info-row"><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> ${b.email}</div>
+          <div class="info-row"><i class="fa-solid fa-phone"></i> <strong>Điện thoại:</strong> ${b.phone}</div>
+          <div class="info-row"><i class="fa-solid fa-calendar-check"></i> <strong>Nhận phòng:</strong> ${b.checkin}</div>
+          <div class="info-row"><i class="fa-solid fa-calendar-xmark"></i> <strong>Trả phòng:</strong> ${b.checkout}</div>
+          <div class="info-row"><i class="fa-solid fa-money-bill-wave"></i> <strong>Trạng thái thanh toán:</strong> 
+            <span class="unpaid">Chưa thanh toán</span>
+          </div>
+          <div style="margin:18px 0 10px 0; text-align:center;">
+            ${qrImg}
+            <div style="margin-top:8px;">
+              <strong>Số tiền:</strong> <span style="color:var(--main-green);font-weight:bold;">${moneyStr}</span>
+            </div>
+            <small>Quét mã QR để chuyển khoản<br>STK: 23402072004 - TPBank<br>Nội dung: THANHTOAN ${b.bookingCode}</small>
+          </div>
+          <button id="payBtn" style="margin-top:14px;background:var(--main-yellow);color:#fff;font-weight:bold;padding:12px 0;border:none;border-radius:7px;width:100%;font-size:1.08em;cursor:pointer;">
+            <i class="fa-solid fa-money-check-dollar"></i> Thanh toán ngay
+          </button>
+          <div id="payMsg" style="margin-top:10px;text-align:center;"></div>
+        `;
+
+        document.getElementById('payBtn').onclick = function() {
+          fetch('PHP/update_payment.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ bookingCode: b.bookingCode })
+          })
+          .then(res => res.json())
+          .then(result => {
+            if (result.success) {
+              document.getElementById('payMsg').innerHTML = `<span style="color:var(--main-green);font-weight:bold;"><i class="fa-solid fa-circle-check"></i> Thanh toán thành công! Vui lòng bấm Check-in.</span>`;
+              document.getElementById('payBtn').style.display = 'none';
+              infoDiv.innerHTML += `
+                <button id="checkinBtn" style="margin-top:14px;"><i class="fa-solid fa-door-open"></i> Check-in</button>
+                <div id="checkinMsg" style="margin-top:10px;text-align:center;"></div>
+              `;
+              // Gán lại sự kiện cho nút Check-in mới
+              document.getElementById('checkinBtn').onclick = function() {
+                fetch('PHP/checkin_api.php', {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({ bookingCode: b.bookingCode, action: 'checkin' })
+                })
+                .then(res => res.json())
+                .then(data => {
+                  if (data.success) {
+                    document.getElementById('checkinMsg').innerHTML = `<span style="color:var(--main-green);font-weight:bold;"><i class="fa-solid fa-circle-check"></i> Check-in thành công!</span>`;
+                  } else {
+                    document.getElementById('checkinMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">${data.message || 'Check-in thất bại!'}</span>`;
+                  }
+                })
+                .catch(() => {
+                  document.getElementById('checkinMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">Có lỗi khi check-in!</span>`;
+                });
+              };
+            } else {
+              document.getElementById('payMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">${result.message || 'Thanh toán thất bại!'}</span>`;
+            }
+          })
+          .catch(() => {
+            document.getElementById('payMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">Có lỗi khi cập nhật thanh toán!</span>`;
+          });
+        };
+      })
+      .catch(() => {
+        msgDiv.textContent = 'Có lỗi xảy ra, vui lòng thử lại!';
+        msgDiv.style.color = '#d32f2f';
+        infoDiv.innerHTML = '';
+      });
+    };
+  </script>
+</body>
+</html>
