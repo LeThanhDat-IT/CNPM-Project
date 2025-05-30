@@ -1,9 +1,8 @@
-How to run the project ?  
-1. Download the project and extract it  
-2. Download WampServer, run the server then type "localhost" on google or something  
-3. Sign in by username = "root", password = "" and create the database  
-4. Add the database in the folder to WampServer  
-5. Add the folder into C:\wamp64\www  
-6. Then type localhost/folder_name  
-
-*Note: Check your database name in Wamp and in file connect.php (database names must be the same)
+How to run the project?
+1. Download the project and unzip
+2. Download WampServer, run the server, then type "localhost" on Google or something
+3. Log in with username = "root", password = "" and create a database
+4. Add the database in the folder to WampServer
+5. Add the folder to C:\wamp64\www
+6. Then type localhost/folder_name
+*Note: Check your database name in Wamp and in the connect.php file (the database name should be the same)
